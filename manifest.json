@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "LarpWallet",
+  "version": "1.0.0",
+  "description": "A prop wallet Chrome extension similar to Phantom.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LarpWallet",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["https://api.coingecko.com/*"]
+}

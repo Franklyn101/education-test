@@ -1,0 +1,55 @@
+# ---- Chrome extension packaging ----
+# NEVER commit these: the .pem is the extension's private signing key.
+*.pem
+*.crx
+*.zip
+*.tar.gz
+build/
+dist/
+web-ext-artifacts/
+
+# ---- Secrets / local config ----
+.env
+.env.*
+!.env.example
+secrets.json
+*.key
+
+# ---- Dependencies (if tooling is ever added) ----
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ---- Logs ----
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+
+# ---- OS junk ----
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ---- Local scratch ----
+tmp/
+temp/
+scratch/
+*.bak
+*.orig

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phantom</title>
+  <link rel="stylesheet" href="css/popup.css?v=11" />
+</head>
+<body>
+  <div id="app">
+    <!-- ===== Normal wallet view ===== -->
+    <div id="wallet">
+      <header class="topbar">
+        <button class="icon-btn" id="btnMenu" title="Menu">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 6h16v2H4zM4 11h16v2H4zM4 16h16v2H4z"/></svg>
+        </button>
+        <button class="account-pill" id="accountPill">
+          <span class="avatar" id="accountAvatar"></span>
+          <span class="account-name" id="accountName">Wallet 1</span>
+          <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M7 10l5 5 5-5z"/></svg>
+        </button>
+        <button class="icon-btn" id="btnCopy" title="Copy address">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </header>
+
+      <section class="balance-block">
+        <div class="total-balance" id="totalBalance">$0.00</div>
+        <div class="total-change" id="totalChange">+$0.00 (0.00%)</div>
+      </section>
+
+      <section class="actions">
+        <button class="action" data-action="receive">
+          <span class="action-ico"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Receive</span>
+        </button>
+        <button class="action" data-action="send">
+          <span class="action-ico"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 20V8m0 0l-5 5m5-5l5 5M5 4h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Send</span>
+        </button>
+        <button class="action" data-action="swap">
+          <span class="action-ico"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M7 7h11l-3-3m3 3l-3 3M17 17H6l3-3m-3 3l3 3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Swap</span>
+        </button>
+        <button class="action" data-action="buy">
+          <span class="action-ico"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Buy</span>
+        </button>
+      </section>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="tokens">Tokens</button>
+        <button class="tab" data-tab="activity">Activity</button>
+      </nav>
+
+      <main class="content">
+        <div id="tokensList" class="list"></div>
+        <div id="activityList" class="list hidden"></div>
+      </main>
+    </div>
+
+    <!-- ===== Hidden edit overlay (F7) ===== -->
+    <div id="editOverlay" class="hidden">
+      <div class="edit-head">
+        <span class="edit-title">Prop Editor</span>
+        <span class="edit-hint">Press F7 or Esc to close</span>
+        <button class="icon-btn" id="editClose" title="Close">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M18.3 5.71L12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.29 19.7 2.88 18.3 9.17 12 2.88 5.71 4.29 4.29l6.3 6.3 6.3-6.3z"/></svg>
+        </button>
+      </div>
+
+      <div class="edit-body">
+        <div class="edit-section">
+          <div class="edit-section-title">Wallet</div>
+          <label class="field">
+            <span>Wallet name</span>
+            <input type="text" id="fldName" />
+          </label>
+          <label class="field">
+            <span>Wallet address</span>
+            <input type="text" id="fldAddress" />
+          </label>
+          <label class="field">
+            <span>Override total balance ($) — leave blank to auto-sum</span>
+            <input type="number" id="fldTotalOverride" step="0.01" placeholder="auto" />
+          </label>
+          <label class="field checkbox">
+            <input type="checkbox" id="fldFreeze" />
+            <span>Freeze prices (stop live movement)</span>
+          </label>
+        </div>
+
+        <div class="edit-section">
+          <div class="edit-section-title">Assets</div>
+          <div id="editTokens"></div>
+          <button class="ghost-btn" id="addToken">+ Add asset</button>
+        </div>
+
+        <div class="edit-section">
+          <div class="edit-section-title">Transactions</div>
+          <div id="editTxns"></div>
+          <button class="ghost-btn" id="addTxn">+ Add transaction</button>
+        </div>
+
+        <div class="edit-section">
+          <button class="danger-btn" id="resetDefaults">Reset to defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Transaction flow overlay (Send / Receive / Swap / Buy) ===== -->
+    <div id="flowOverlay" class="hidden"></div>
+
+    <div id="toast" class="hidden"></div>
+  </div>
+
+  <script src="js/store.js?v=11"></script>
+  <script src="js/prices.js?v=11"></script>
+  <script src="js/render.js?v=11"></script>
+  <script src="js/flows.js?v=11"></script>
+  <script src="js/edit.js?v=11"></script>
+  <script src="js/popup.js?v=11"></script>
+</body>
+</html>
